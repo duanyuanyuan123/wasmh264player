@@ -685,7 +685,7 @@ ErrorCode openDecoder(int *paramArray, int paramCount, long videoCallback, long 
     do {
         simpleLog("Opening decoder.");
 
-        av_register_all();
+        // av_register_all();
         avcodec_register_all();
 
         if (logLevel == kLogLevel_All) {
@@ -797,10 +797,10 @@ ErrorCode openDecoder(int *paramArray, int paramCount, long videoCallback, long 
         }
         */
         
-        decoder->videoSize = avpicture_get_size(
+        decoder->videoSize = av_image_get_buffer_size(
             decoder->videoCodecContext->pix_fmt,
             decoder->videoCodecContext->width,
-            decoder->videoCodecContext->height);
+            decoder->videoCodecContext->height,1);
 
         decoder->videoBufferSize = 3 * decoder->videoSize;
         decoder->yuvBuffer = (unsigned char *)av_mallocz(decoder->videoBufferSize);
